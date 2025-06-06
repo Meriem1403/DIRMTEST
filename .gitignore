@@ -1,0 +1,34 @@
+# 🌍 Symfony
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+composer.lock
+
+# ⚙️ Configuration (IDE, OS, logs)
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# 🧪 Tests
+/phpunit.xml
+/.phpunit.cache/
+/tests/
+/coverage/
+
+# 🎨 Asset Mapper / Tailwind
+/public/assets/
+/public/build/
+/assets/vendor/
+yarn.lock
+node_modules/
+
+# 🐳 Docker
+docker-compose.override.yml
+docker-compose.override.yaml
+.env.docker
+.env.override

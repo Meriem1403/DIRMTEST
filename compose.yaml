@@ -1,0 +1,44 @@
+
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:9.1
+    container_name: dirm_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dbpass
+      MYSQL_DATABASE: dirm
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dirm_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: dbpass
+    depends_on:
+      - mysql
+
+  mailer:
+    image: axllent/mailpit
+    container_name: dirm_mailpit
+    ports:
+      - "1026:1025"
+      - "8026:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+volumes:
+  mysql_data:
