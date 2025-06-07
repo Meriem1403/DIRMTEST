@@ -23,9 +23,6 @@ class Role
     #[ORM\Column(length: 255)]
     private ?string $label = null;
 
-    /**
-     * @var Collection<int, User>
-     */
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'role')]
     private Collection $users;
 
@@ -61,9 +58,6 @@ class Role
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
     public function getUsers(): Collection
     {
         return $this->users;

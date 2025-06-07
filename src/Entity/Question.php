@@ -28,6 +28,9 @@ class Question
     #[ORM\Column(length: 255)]
     private ?string $submissionType = null;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $options = null;
+
     #[ORM\ManyToOne(targetEntity: self::class)]
     #[ORM\JoinColumn(name: "depends_on_question_id", referencedColumnName: "id", nullable: true)]
     private ?self $dependsOnQuestion = null;
@@ -92,6 +95,17 @@ class Question
     public function setSubmissionType(string $submissionType): static
     {
         $this->submissionType = $submissionType;
+        return $this;
+    }
+
+    public function getOptions(): ?array
+    {
+        return $this->options;
+    }
+
+    public function setOptions(?array $options): static
+    {
+        $this->options = $options;
         return $this;
     }
 
