@@ -60,8 +60,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $country = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $jobTitle = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $status = null;
@@ -184,14 +182,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCountry(?string $country): static
     {
         $this->country = $country;
-        return $this;
-    }
-
-    public function getJobTitle(): ?string { return $this->jobTitle; }
-
-    public function setJobTitle(?string $jobTitle): static
-    {
-        $this->jobTitle = $jobTitle;
         return $this;
     }
 
