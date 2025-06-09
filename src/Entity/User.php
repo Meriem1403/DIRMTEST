@@ -87,11 +87,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: true)]
     private ?Service $service = null;
 
-    #[ORM\OneToMany(mappedBy: 'agent', targetEntity: Submission::class)]
+    #[ORM\OneToMany(targetEntity: Submission::class, mappedBy: 'agent')]
     private Collection $submissionsAsAgent;
 
-    #[ORM\OneToMany(mappedBy: 'filledBy', targetEntity: Submission::class)]
+    #[ORM\OneToMany(targetEntity: Submission::class, mappedBy: 'filledBy')]
     private Collection $submissionsAsFilledBy;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $jobTitle = null;
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
@@ -300,6 +303,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $submission->setFilledBy(null);
             }
         }
+        return $this;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    public function setJobTitle(?string $jobTitle): static
+    {
+        $this->jobTitle = $jobTitle;
+
         return $this;
     }
 }
