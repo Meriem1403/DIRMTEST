@@ -2,16 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\ServiceRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use App\Entity\User;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
+    public const CATEGORIES = [
+        'Direction',
+        'Support',
+        'Opérationnel',
+        'Secrétariat Général',
+        'Technique',
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,13 +29,19 @@ class Service
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 50, unique: true)]
+    private ?string $code = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $category = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $location = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(mappedBy: 'service', targetEntity: User::class)]
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'service')]
     private Collection $users;
 
     public function __construct()
@@ -50,6 +65,42 @@ class Service
         return $this;
     }
 
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        if (!in_array($category, self::CATEGORIES, true)) {
+            throw new InvalidArgumentException("Catégorie invalide : $category");
+        }
+        $this->category = $category;
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): static
+    {
+        $this->location = $location;
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -61,9 +112,6 @@ class Service
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
     public function getUsers(): Collection
     {
         return $this->users;
@@ -88,5 +136,10 @@ class Service
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? 'Service';
     }
 }

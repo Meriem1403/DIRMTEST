@@ -26,9 +26,13 @@ class Role
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'role')]
     private Collection $users;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $hierarchy = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->hierarchy = [];
     }
 
     public function getId(): ?int
@@ -76,11 +80,27 @@ class Role
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            if ($user->getRole() === $this) {
+            if ($user->getRole() === $this && method_exists($user, 'setRole')) {
                 $user->setRole(null);
             }
         }
 
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->label ?? $this->name ?? 'Role';
+    }
+
+    public function getHierarchy(): array
+    {
+        return $this->hierarchy ?? [];
+    }
+
+    public function setHierarchy(?array $hierarchy): static
+    {
+        $this->hierarchy = $hierarchy;
         return $this;
     }
 }

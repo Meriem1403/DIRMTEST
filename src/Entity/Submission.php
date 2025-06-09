@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\SubmissionRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubmissionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Submission
 {
     #[ORM\Id]
@@ -24,13 +26,21 @@ class Submission
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'submissionsAsAgent')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'submissionsAsAgent')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $agent = null;
 
-    #[ORM\ManyToOne(inversedBy: 'submissionsAsFilledBy')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'submissionsAsFilledBy')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $filledBy = null;
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new DateTimeImmutable();
+        }
+    }
 
     public function getId(): ?int
     {
