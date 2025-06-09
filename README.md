@@ -8,8 +8,7 @@
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.1-06B6D4?logo=tailwindcss)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Tests](https://github.com/Meriem1403/DIRM/actions/workflows/tests.yml/badge.svg)
-
+![PHPUnit Tests](https://github.com/Meriem1403/DIRM/actions/workflows/run-tests.yml/badge.svg)
 Application Symfony développée pour la Direction Interrégionale de la Mer Méditerranée (DIRM Med), permettant de gérer 3 types de demandes administratives :
 - Formulaires de mobilité des agents
 - Accès aux outils métier
