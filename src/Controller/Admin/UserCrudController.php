@@ -125,7 +125,23 @@ class UserCrudController extends AbstractCrudController
 
         $fields[] = FormField::addTab('🏢 Affectation');
         $fields[] = AssociationField::new('role', '🔐 Rôle')->setColumns(6);
-        $fields[] = AssociationField::new('service', '🏢 Service')->setColumns(6);
+        $fields[] = AssociationField::new('service', '🏢 Service')
+            ->setColumns(6)
+            ->setFormTypeOptions([
+                'attr' => [
+                    'data-controller' => 'service-types',
+                    'data-action' => 'change->service-types#loadTypes',
+                    'data-service-types-target' => 'service',
+                ],
+            ]);
+
+        ChoiceField::new('serviceType', 'Type de service')
+            ->setChoices([])
+            ->setColumns(6)
+            ->setFormTypeOptions([
+                'attr' => ['data-service-types-target' => 'type'],
+            ]);
+
 
         return $fields;
     }

@@ -23,10 +23,10 @@ class Service
     private ?string $code = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $locations = [];
+    private array $locations;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $types = [];
+    private array $types;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
