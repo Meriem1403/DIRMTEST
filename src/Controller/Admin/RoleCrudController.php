@@ -36,7 +36,7 @@ class RoleCrudController extends AbstractCrudController
             $action->setIcon('fa fa-pen')->setLabel('Modifier')
             )
             ->update(Crud::PAGE_INDEX, Action::DELETE, fn(Action $action) =>
-            $action->setIcon('fa fa-trash')->setLabel('Supprimer')
+            $action->setIcon('fa fa-trash text-danger')->setLabel('Supprimer')
             );
     }
 
@@ -48,7 +48,7 @@ class RoleCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_INDEX, '🔐 Liste des rôles')
             ->setPageTitle(Crud::PAGE_NEW, '➕ Créer un rôle')
             ->setPageTitle(Crud::PAGE_EDIT, '✏️ Modifier le rôle')
-            ->setPageTitle(Crud::PAGE_DETAIL, '<UNK> Rôle')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Rôle')
             ->setDefaultSort(['id' => 'ASC']);
     }
 

@@ -13,12 +13,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\{
     TextField,
     TextEditorField,
     FormField,
-    ChoiceField,
-    AssociationField
+    ArrayField,
+    AssociationField,
+    Field
 };
 use EasyCorp\Bundle\EasyAdminBundle\Filter\{
-    TextFilter,
-    ChoiceFilter
+    TextFilter
 };
 
 class ServiceCrudController extends AbstractCrudController
@@ -59,45 +59,31 @@ class ServiceCrudController extends AbstractCrudController
         return $filters
             ->add(TextFilter::new('name', 'Nom'))
             ->add(TextFilter::new('code', 'Code'))
-            ->add(TextFilter::new('location', 'Emplacement'))
-            ->add(ChoiceFilter::new('category', 'Catégorie')->setChoices(
-                array_combine(Service::CATEGORIES, Service::CATEGORIES)
-            ));
+            ->add(TextFilter::new('types', 'Types'))
+            ->add(TextFilter::new('locations', 'Emplacements'));
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $fields = [];
+        return [
+            FormField::addTab('🔧 Informations générales'),
+            IdField::new('id')->hideOnForm(),
+            TextField::new('name', 'Nom du service'),
+            TextField::new('code', 'Code')->setHelp('Ex : PHB-MRS, SG-RH, DIRM-TECH'),
+            ArrayField::new('types', 'Types de service')->onlyOnForms()
+                ->setHelp('Ex : Technique, Administratif, Opérationnel...'),
+            ArrayField::new('locations', '📍 Emplacements multiples')->onlyOnForms()
+                ->setHelp('Ex : COB de Toulon, COB de Marseille, COB de Sète…'),
+            TextEditorField::new('description', '📝 Description')->hideOnIndex(),
 
-        $fields[] = FormField::addTab('🔧 Informations générales');
-        $fields[] = IdField::new('id')->hideOnForm();
-        $fields[] = TextField::new('name', 'Nom complet');
-        $fields[] = TextField::new('code', 'Code service')->setHelp('Ex : SG-RH, SSGM, PHB-MRS');
-        $fields[] = TextField::new('location', '📍 Emplacement');
+            Field::new('nextTab')
+                ->onlyOnForms()
+                ->setLabel('')
+                ->setFormTypeOption('mapped', false)
+                ->setHelp('<div class="text-right mt-4"><span class="text-muted">➡️ Cliquez sur l’onglet <strong>👥 Utilisateurs assignés</strong> ci-dessus pour continuer</span></div>'),
 
-        if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = TextField::new('category', 'Type de service')
-                ->formatValue(function ($value) {
-                    $colors = [
-                        'Administratif' => 'badge-secondary',
-                        'Technique'     => 'badge-primary',
-                        'Opérationnel'  => 'badge-success',
-                        'Transversal'   => 'badge-warning',
-                    ];
-                    $color = $colors[$value] ?? 'badge-info';
-                    return sprintf('<span class="badge %s">%s</span>', $color, $value);
-                })
-                ->renderAsHtml();
-        } else {
-            $fields[] = ChoiceField::new('category', 'Type de service')
-                ->setChoices(array_combine(Service::CATEGORIES, Service::CATEGORIES));
-        }
-
-        $fields[] = TextEditorField::new('description', '📝 Description')->hideOnIndex();
-
-        $fields[] = FormField::addTab('👥 Utilisateurs assignés')->onlyOnDetail();
-        $fields[] = AssociationField::new('users', '👥 Utilisateurs')->onlyOnDetail();
-
-        return $fields;
+            FormField::addTab('👥 Utilisateurs assignés')->onlyOnDetail(),
+            AssociationField::new('users', '👥 Utilisateurs')->onlyOnDetail(),
+        ];
     }
 }

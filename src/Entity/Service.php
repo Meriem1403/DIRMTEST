@@ -2,25 +2,15 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
-    public const CATEGORIES = [
-        'Direction',
-        'Support',
-        'Opérationnel',
-        'Secrétariat Général',
-        'Technique',
-    ];
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,11 +22,11 @@ class Service
     #[ORM\Column(length: 50, unique: true)]
     private ?string $code = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $category = null;
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $locations = [];
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $location = null;
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $types = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -47,6 +37,8 @@ class Service
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->locations = [];
+        $this->types = [];
     }
 
     public function getId(): ?int
@@ -76,28 +68,25 @@ class Service
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getLocations(): array
     {
-        return $this->category;
+        return $this->locations;
     }
 
-    public function setCategory(string $category): static
+    public function setLocations(array $locations): static
     {
-        if (!in_array($category, self::CATEGORIES, true)) {
-            throw new InvalidArgumentException("Catégorie invalide : $category");
-        }
-        $this->category = $category;
+        $this->locations = $locations;
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getTypes(): array
     {
-        return $this->location;
+        return $this->types;
     }
 
-    public function setLocation(?string $location): static
+    public function setTypes(array $types): static
     {
-        $this->location = $location;
+        $this->types = $types;
         return $this;
     }
 

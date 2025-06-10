@@ -50,6 +50,7 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_INDEX, '👥 Liste des profils')
             ->setPageTitle(Crud::PAGE_NEW, '➕ Créer un profil')
             ->setPageTitle(Crud::PAGE_EDIT, '✏️ Modifier le profil')
+            ->setPageTitle(Crud::PAGE_DETAIL, '🧾Details du service')
             ->setDefaultSort(['id' => 'ASC']);
     }
 
@@ -69,6 +70,7 @@ class UserCrudController extends AbstractCrudController
                 'A' => 'A',
                 'B' => 'B',
                 'C' => 'C',
+                'Autre' => 'Autre',
             ]));
     }
 
@@ -85,12 +87,12 @@ class UserCrudController extends AbstractCrudController
 
         $fields[] = TextField::new('firstName', '🧑‍💼 Prénom')->setColumns(6)->hideOnIndex();
         $fields[] = TextField::new('lastName', '👤 Nom')->setColumns(6)->hideOnIndex();
-        $fields[] = EmailField::new('email', '📧 Email')->setColumns(6);
+        $fields[] = EmailField::new('email', '📧 Email')->setColumns(6)->hideOnIndex();
         $fields[] = TelephoneField::new('phoneNumber', '📞 Téléphone')->setColumns(6);
-        $fields[] = TextField::new('address', '🏠 Adresse')->setColumns(6);
-        $fields[] = TextField::new('city', '🏙 Ville')->setColumns(4);
-        $fields[] = TextField::new('zipCode', '📮 Code postal')->setColumns(4);
-        $fields[] = CountryField::new('country', '🌍 Pays')->setColumns(4);
+        $fields[] = TextField::new('address', '🏠 Adresse')->setColumns(6)->hideOnIndex();
+        $fields[] = TextField::new('city', '🏙 Ville')->setColumns(4)->hideOnIndex();
+        $fields[] = TextField::new('zipCode', '📮 Code postal')->setColumns(4)->hideOnIndex();
+        $fields[] = CountryField::new('country', '🌍 Pays')->setColumns(4)->hideOnIndex();
 
         $fields[] = FormField::addTab('💼 Poste & Statut');
         $fields[] = TextField::new('jobTitle', '🪪 Poste occupé')->setColumns(6);
