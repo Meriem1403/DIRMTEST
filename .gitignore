@@ -31,3 +31,10 @@ docker-compose.override.yml
 docker-compose.override.yaml
 .env.docker
 .env.override
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

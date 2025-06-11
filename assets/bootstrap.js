@@ -1,5 +1,8 @@
-import { startStimulusApp } from '@symfony/stimulus-bundle';
+import { startStimulusApp } from '@symfony/stimulus-bridge';
+import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers';
 
+// Initialise Stimulus
 const app = startStimulusApp();
-// register any custom, 3rd party controllers here
-// app.register('some_controller_name', SomeImportedController);
+
+// Charge automatiquement tous les fichiers `.js` dans `assets/controllers/`
+app.load(definitionsFromContext(require.context('./controllers', true, /\.js$/)));

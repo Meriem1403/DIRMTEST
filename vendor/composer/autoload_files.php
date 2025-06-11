@@ -25,5 +25,6 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'a1105708a18b76903365ca1c4aa61b02' => $vendorDir . '/symfony/translation/Resources/functions.php',
     '1052008401d4a2a5be02f7b4e274d051' => $vendorDir . '/twig/html-extra/Resources/functions.php',
+    'efb2d634b7fd658cd94fee9c19fd24ea' => $vendorDir . '/api-platform/core/src/JsonLd/HydraContext.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
 );

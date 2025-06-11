@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,6 +15,7 @@ use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct()
@@ -95,6 +97,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $jobTitle = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $serviceType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $serviceLocation = null;
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
@@ -314,6 +322,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setJobTitle(?string $jobTitle): static
     {
         $this->jobTitle = $jobTitle;
+
+        return $this;
+    }
+
+    public function getServiceType(): ?string
+    {
+        return $this->serviceType;
+    }
+
+    public function setServiceType(?string $serviceType): static
+    {
+        $this->serviceType = $serviceType;
+
+        return $this;
+    }
+
+    public function getServiceLocation(): ?string
+    {
+        return $this->serviceLocation;
+    }
+
+    public function setServiceLocation(?string $serviceLocation): static
+    {
+        $this->serviceLocation = $serviceLocation;
 
         return $this;
     }

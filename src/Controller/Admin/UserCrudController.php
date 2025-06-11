@@ -50,7 +50,7 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_INDEX, '👥 Liste des profils')
             ->setPageTitle(Crud::PAGE_NEW, '➕ Créer un profil')
             ->setPageTitle(Crud::PAGE_EDIT, '✏️ Modifier le profil')
-            ->setPageTitle(Crud::PAGE_DETAIL, '🧾Details du service')
+            ->setPageTitle(Crud::PAGE_DETAIL, '🧾 Détails du profil')
             ->setDefaultSort(['id' => 'ASC']);
     }
 
@@ -118,30 +118,38 @@ class UserCrudController extends AbstractCrudController
             ->setColumns(3);
 
         $fields[] = FormField::addTab('🔐 Statut et sécurité');
-        $fields[] = TextField::new('password', 'Mot de passe')->hideOnIndex()->hideOnDetail()->setColumns(6);
+        $fields[] = TextField::new('password', '🔒 Mot de passe')->hideOnIndex()->hideOnDetail()->setColumns(6);
         $fields[] = BooleanField::new('isVerified', '✅ Vérifié')->renderAsSwitch(false);
         $fields[] = BooleanField::new('isActive', '🟢 Actif')->renderAsSwitch(false);
         $fields[] = DateTimeField::new('createdAt', '🕒 Créé le')->onlyOnDetail();
 
         $fields[] = FormField::addTab('🏢 Affectation');
+
         $fields[] = AssociationField::new('role', '🔐 Rôle')->setColumns(6);
+
         $fields[] = AssociationField::new('service', '🏢 Service')
             ->setColumns(6)
             ->setFormTypeOptions([
                 'attr' => [
                     'data-controller' => 'service-types',
-                    'data-action' => 'change->service-types#loadTypes',
-                    'data-service-types-target' => 'service',
+                    'data-action' => 'change->service-types#updateFields',
+                    'data-service-types-target' => 'serviceSelect',
                 ],
             ]);
 
-        ChoiceField::new('serviceType', 'Type de service')
+        $fields[] = ChoiceField::new('serviceType', '🏷 Type de service')
             ->setChoices([])
-            ->setColumns(6)
             ->setFormTypeOptions([
-                'attr' => ['data-service-types-target' => 'type'],
-            ]);
+                'attr' => ['data-service-types-target' => 'typeField'],
+            ])
+            ->setColumns(6);
 
+        $fields[] = ChoiceField::new('serviceLocation', '📍 Emplacement')
+            ->setChoices([])
+            ->setFormTypeOptions([
+                'attr' => ['data-service-types-target' => 'locationField'],
+            ])
+            ->setColumns(6);
 
         return $fields;
     }
