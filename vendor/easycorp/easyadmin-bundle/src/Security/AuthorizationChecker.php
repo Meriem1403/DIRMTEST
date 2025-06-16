@@ -2,6 +2,7 @@
 
 namespace EasyCorp\Bundle\EasyAdminBundle\Security;
 
+use Symfony\Component\Security\Core\Authorization\AccessDecision;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
@@ -20,7 +21,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function isGranted($permission, $subject = null): bool
+    public function isGranted($permission, $subject = null, ?AccessDecision $accessDecision = null): bool
     {
         // this check is needed for performance reasons because most of the times permissions
         // won't be set, so this function must return as early as possible in those cases

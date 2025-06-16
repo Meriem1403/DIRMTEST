@@ -65,6 +65,10 @@ use function Symfony\Component\String\u;
 
 /**
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ *
+ * @template TEntity of object
+ *
+ * @implements  CrudControllerInterface<TEntity>
  */
 abstract class AbstractCrudController extends AbstractController implements CrudControllerInterface
 {

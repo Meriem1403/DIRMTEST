@@ -25,10 +25,10 @@ class Service
     private ?string $code = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $locations;
+    private array $locations = [];
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $types;
+    private array $types = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -132,5 +132,16 @@ class Service
     public function __toString(): string
     {
         return $this->name ?? 'Service';
+    }
+
+    // 🔧 MÉTHODES POUR L'API
+    public function getTypesAsArray(): array
+    {
+        return is_array($this->types) ? $this->types : [];
+    }
+
+    public function getLocationsAsArray(): array
+    {
+        return is_array($this->locations) ? $this->locations : [];
     }
 }

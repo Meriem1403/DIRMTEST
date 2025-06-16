@@ -36,8 +36,7 @@ class DoctrineBundle extends Bundle
 {
     private Closure|null $autoloader = null;
 
-    /** @return void */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -75,8 +74,7 @@ class DoctrineBundle extends Bundle
         $container->addCompilerPass(new RegisterUidTypePass());
     }
 
-    /** @return void */
-    public function boot()
+    public function boot(): void
     {
         // Register an autoloader for proxies to avoid issues when unserializing them
         // when the ORM is used.
@@ -124,8 +122,7 @@ class DoctrineBundle extends Bundle
         $this->autoloader = Autoloader::register($dir, $namespace, $proxyGenerator);
     }
 
-    /** @return void */
-    public function shutdown()
+    public function shutdown(): void
     {
         if ($this->autoloader !== null) {
             spl_autoload_unregister($this->autoloader);
@@ -157,8 +154,7 @@ class DoctrineBundle extends Bundle
         }
     }
 
-    /** @return void */
-    public function registerCommands(Application $application)
+    public function registerCommands(Application $application): void
     {
     }
 

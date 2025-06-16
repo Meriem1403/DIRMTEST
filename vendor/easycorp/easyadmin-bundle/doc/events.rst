@@ -37,9 +37,7 @@ Event Subscriber Example
 ..       Show the CRUD URL builder
 
 The following example shows how to use an event subscriber to set the ``slug``
-property of the ``BlogPost`` entity before persisting it:
-
-.. code-block:: php
+property of the ``BlogPost`` entity before persisting it::
 
     # src/EventSubscriber/EasyAdminSubscriber.php
     namespace App\EventSubscriber;

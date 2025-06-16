@@ -39,7 +39,6 @@ use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Doctrine\Persistence\Mapping\Driver\StaticPHPDriver;
-use Doctrine\Persistence\Reflection\RuntimeReflectionProperty;
 use InvalidArgumentException;
 use LogicException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -65,7 +64,7 @@ use Symfony\Component\Messenger\Bridge\Doctrine\Transport\DoctrineTransportFacto
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
 use Symfony\Component\Validator\Mapping\Loader\LoaderInterface;
-use Symfony\Component\VarExporter\LazyGhostTrait;
+use Symfony\Component\VarExporter\ProxyHelper;
 
 use function array_intersect_key;
 use function array_keys;
@@ -77,7 +76,6 @@ use function method_exists;
 use function reset;
 use function sprintf;
 use function str_replace;
-use function trait_exists;
 use function trigger_deprecation;
 
 /**
@@ -559,17 +557,10 @@ class DoctrineExtension extends AbstractDoctrineExtension
         $container->setParameter('doctrine.default_entity_manager', $config['default_entity_manager']);
 
         if ($config['enable_lazy_ghost_objects'] ?? false) {
-            if (! trait_exists(LazyGhostTrait::class)) {
+            if (! class_exists(ProxyHelper::class)) {
                 throw new LogicException(
                     'Lazy ghost objects cannot be enabled because the "symfony/var-exporter" library'
                     . ' is not installed. Please run "composer require symfony/var-exporter".',
-                );
-            }
-
-            if (! class_exists(RuntimeReflectionProperty::class)) {
-                throw new LogicException(
-                    'Lazy ghost objects cannot be enabled because the "doctrine/persistence" library'
-                    . ' version 3.1 or higher is not installed. Please run "composer update doctrine/persistence".',
                 );
             }
         } elseif (! method_exists(ProxyFactory::class, 'resetUninitializedProxy')) {

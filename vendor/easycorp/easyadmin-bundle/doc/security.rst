@@ -245,9 +245,7 @@ First, install the component in your project using Composer:
     $ composer require symfony/expression-language
 
 Now, you can pass a Symfony Expression object to any ``setPermission()`` method
-like this:
-
-.. code-block:: php
+like this::
 
     use Symfony\Component\ExpressionLanguage\Expression;
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
+class ComposerStaticInit88f540281457b86385ab3e9a82c881ad
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -112,7 +112,6 @@ class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
             'Symfony\\Component\\Cache\\' => 24,
             'Symfony\\Component\\BrowserKit\\' => 29,
             'Symfony\\Component\\Asset\\' => 24,
-            'Symfony\\Component\\AssetMapper\\' => 30,
             'Symfony\\Bundle\\WebProfilerBundle\\' => 33,
             'Symfony\\Bundle\\TwigBundle\\' => 26,
             'Symfony\\Bundle\\SecurityBundle\\' => 30,
@@ -173,10 +172,6 @@ class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
             'Doctrine\\Bundle\\FixturesBundle\\' => 31,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
             'DeepCopy\\' => 9,
-        ),
-        'C' => 
-        array (
-            'Composer\\Semver\\' => 16,
         ),
         'A' => 
         array (
@@ -469,10 +464,6 @@ class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
         array (
             0 => __DIR__ . '/..' . '/symfony/asset',
         ),
-        'Symfony\\Component\\AssetMapper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/asset-mapper',
-        ),
         'Symfony\\Bundle\\WebProfilerBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/web-profiler-bundle',
@@ -640,10 +631,6 @@ class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
-        ),
-        'Composer\\Semver\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/composer/semver/src',
         ),
         'App\\Tests\\' => 
         array (
@@ -1952,9 +1939,9 @@ class ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2c21e784df99d9b68ba1ffbb36eea549::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit88f540281457b86385ab3e9a82c881ad::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit88f540281457b86385ab3e9a82c881ad::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit88f540281457b86385ab3e9a82c881ad::$classMap;
 
         }, null, ClassLoader::class);
     }

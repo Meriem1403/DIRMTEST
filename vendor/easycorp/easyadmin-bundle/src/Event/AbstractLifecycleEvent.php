@@ -6,11 +6,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Contracts\Event\EntityLifecycleEventInterfac
 
 /**
  * @author: Benjamin Leibinger <mail@leibinger.io>
+ *
+ * @template TEntity of object
+ *
+ * @implements EntityLifecycleEventInterface<TEntity>
  */
 abstract class AbstractLifecycleEvent implements EntityLifecycleEventInterface
 {
+    /**
+     * @var TEntity
+     */
     protected $entityInstance;
 
+    /**
+     * @param TEntity $entityInstance
+     */
     public function __construct(/* ?object */ $entityInstance)
     {
         if (!\is_object($entityInstance)

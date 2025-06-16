@@ -67,7 +67,6 @@ final class ArrayFilter implements FilterInterface
         } else {
             $orX = new Orx();
             foreach ($value as $key => $item) {
-                // TODO: check this code because the loop variable is not used
                 $itemParameterName = sprintf('%s_%s', $parameterName, $key);
                 $orX->add(sprintf('%s.%s %s :%s', $alias, $property, $comparison, $itemParameterName));
                 $queryBuilder->setParameter($itemParameterName, $useQuotes ? '%"'.$item.'"%' : '%'.$item.'%');

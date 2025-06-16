@@ -92,13 +92,13 @@ asserts for EasyAdmin web testing:
 * ``CrudTestIndexAsserts``: providing asserts for the index page of EasyAdmin;
 * ``CrudTestFormAsserts`` : providing asserts for the form page of EasyAdmin.
 
-.. note:: 
+.. note::
 
     The trait can be used on its own but, in that case, the class that is using
     it needs both:
 
     * a class property ``client``: instance of ``Symfony\Bundle\FrameworkBundle\KernelBrowser``
-    * a class property ``entitytManager``: instance of ``Doctrine\ORM\EntityManagerInterface``
+    * a class property ``entityManager``: instance of ``Doctrine\ORM\EntityManagerInterface``
 
 CrudTestIndexAsserts
 ~~~~~~~~~~~~~~~~~~~~

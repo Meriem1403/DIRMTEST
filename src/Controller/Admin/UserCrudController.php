@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Repository\ServiceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -25,9 +27,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\{
     EntityFilter,
     ChoiceFilter
 };
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly ServiceRepository $serviceRepository
+    ) {}
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -51,14 +59,15 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_NEW, '➕ Créer un profil')
             ->setPageTitle(Crud::PAGE_EDIT, '✏️ Modifier le profil')
             ->setPageTitle(Crud::PAGE_DETAIL, '🧾 Détails du profil')
-            ->setDefaultSort(['id' => 'ASC']);
+            ->setFormOptions([
+                'attr' => ['data-controller' => 'service-types']
+            ]);
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
             ->add(EntityFilter::new('role'))
-            ->add(EntityFilter::new('service'))
             ->add(BooleanFilter::new('isActive'))
             ->add(BooleanFilter::new('isVerified'))
             ->add(ChoiceFilter::new('status')->setChoices([
@@ -74,7 +83,7 @@ class UserCrudController extends AbstractCrudController
             ]));
     }
 
-    public function configureFields(string $pageName): array
+    public function configureFields(string $pageName): iterable
     {
         $fields = [];
 
@@ -124,33 +133,65 @@ class UserCrudController extends AbstractCrudController
         $fields[] = DateTimeField::new('createdAt', '🕒 Créé le')->onlyOnDetail();
 
         $fields[] = FormField::addTab('🏢 Affectation');
-
         $fields[] = AssociationField::new('role', '🔐 Rôle')->setColumns(6);
 
         $fields[] = AssociationField::new('service', '🏢 Service')
             ->setColumns(6)
-            ->setFormTypeOptions([
-                'attr' => [
-                    'data-controller' => 'service-types',
-                    'data-action' => 'change->service-types#updateFields',
-                    'data-service-types-target' => 'serviceSelect',
-                ],
+            ->setFormTypeOption('attr', [
+                'data-controller' => 'service-types',
+                'data-action' => 'change->service-types#loadOptions',
+                'data-service-types-target' => 'serviceSelect',
+                'data-ea-widget' => 'select',
             ]);
 
         $fields[] = ChoiceField::new('serviceType', '🏷 Type de service')
-            ->setChoices([])
-            ->setFormTypeOptions([
-                'attr' => ['data-service-types-target' => 'typeField'],
+            ->renderAsNativeWidget()
+            ->setRequired(false)
+            ->setFormTypeOption('attr', [
+                'data-service-types-target' => 'typeField',
+                'data-ea-widget' => 'select',
             ])
             ->setColumns(6);
 
         $fields[] = ChoiceField::new('serviceLocation', '📍 Emplacement')
-            ->setChoices([])
-            ->setFormTypeOptions([
-                'attr' => ['data-service-types-target' => 'locationField'],
+            ->renderAsNativeWidget()
+            ->setRequired(false)
+            ->setFormTypeOption('attr', [
+                'data-service-types-target' => 'locationField',
+                'data-ea-widget' => 'select',
             ])
             ->setColumns(6);
 
         return $fields;
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof User) {
+            $this->hydrateService($entityInstance);
+        }
+
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof User) {
+            $this->hydrateService($entityInstance);
+        }
+
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+
+    private function hydrateService(User $user): void
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $formData = $request->request->all()['User'] ?? null;
+
+        if (isset($formData['service']) && is_numeric($formData['service'])) {
+            $service = $this->serviceRepository->find($formData['service']);
+            $user->setService($service);
+            // Optionnel : récupérer type et location depuis l'API ou entité si nécessaire
+        }
     }
 }

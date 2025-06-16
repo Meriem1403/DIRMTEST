@@ -22,9 +22,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ *
+ * @template TEntity of object
  */
 interface CrudControllerInterface
 {
+    /**
+     * @return class-string<TEntity>
+     */
     public static function getEntityFqcn(): string;
 
     public function configureCrud(Crud $crud): Crud;
@@ -65,10 +70,19 @@ interface CrudControllerInterface
 
     public function createEntity(string $entityFqcn);
 
+    /**
+     * @param TEntity $entityInstance
+     */
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void;
 
+    /**
+     * @param TEntity $entityInstance
+     */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void;
 
+    /**
+     * @param TEntity $entityInstance
+     */
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void;
 
     public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface;

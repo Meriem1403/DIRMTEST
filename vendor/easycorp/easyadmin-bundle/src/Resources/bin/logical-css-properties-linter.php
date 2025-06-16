@@ -52,7 +52,7 @@ $logicalCssProperties = [
 
 $directory = __DIR__.'/../../../assets';
 
-return lintCssFiles($directory, $logicalCssProperties);
+exit(lintCssFiles($directory, $logicalCssProperties));
 
 function lintCssFiles($directory, $logicalCssProperties): int
 {

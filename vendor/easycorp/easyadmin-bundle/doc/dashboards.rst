@@ -982,8 +982,8 @@ user locale. You can also use ``TranslatableMessage`` objects to define any text
 content in your backends (e.g. the label of some field, the help contents of
 some page, etc.)::
 
-    use function Symfony\Component\Translation\t;
     use Symfony\Component\Translation\TranslatableMessage;
+    use function Symfony\Component\Translation\t;
 
     // creating translatable messages using objects
     TextField::new('firstName', new TranslatableMessage('Name'))
@@ -1045,9 +1045,7 @@ Twig Template Path: ``@EasyAdmin/page/login.html.twig``
 
 It displays a simple username + password login form that matches the style of
 the rest of the backend. The template defines lots of config options, but most
-applications can rely on its default values:
-
-.. code-block:: php
+applications can rely on its default values::
 
     namespace App\Controller;
 
