@@ -103,9 +103,20 @@ class Question
         return $this->options;
     }
 
-    public function setOptions(?array $options): static
+    /**
+     * Accepts null, array or JSON string.
+     *
+     * @param array|string|null $options
+     */
+    public function setOptions(array|string|null $options): static
     {
-        $this->options = $options;
+        if (is_string($options)) {
+            $decoded = json_decode($options, true);
+            $this->options = is_array($decoded) ? $decoded : null;
+        } else {
+            $this->options = $options;
+        }
+
         return $this;
     }
 

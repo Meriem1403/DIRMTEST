@@ -1,38 +1,55 @@
 <?php
+// src/DataFixtures/UserFixtures.php
 
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Role;
-use App\Entity\Service;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(
+        private readonly UserPasswordHasherInterface $passwordHasher
+    ) {}
+
     public function load(ObjectManager $manager): void
     {
-        $user = new User();
-        $user->setFirstName('Alice');
-        $user->setLastName('Durand');
-        $user->setEmail('alice@example.com');
-        $user->setPassword('password');
+        // Définition des utilisateurs à créer
+        $usersData = [
+            // [ firstName, lastName, email, plainPassword, roleReferenceKey ]
+            ['Admin', 'User', 'admin@example.com', 'adminpass', RoleFixtures::ROLE_ADMIN],
+            ['Chef',  'Service', 'chef@example.com',  'chefpass',  RoleFixtures::ROLE_CHEF],
+            ['Agent', 'One',     'agent@example.com','agentpass', RoleFixtures::ROLE_AGENT],
+        ];
 
-        $user->setRole($this->getReference('role_role_user', Role::class));
-        $user->setService($this->getReference('service_it', Service::class));
+        foreach ($usersData as [$first, $last, $email, $plainPass, $roleRef]) {
+            $user = new User();
+            $user
+                ->setFirstName($first)
+                ->setLastName($last)
+                ->setEmail($email)
+                ->setPassword(
+                    $this->passwordHasher->hashPassword($user, $plainPass)
+                )
+                // Initialise le champ JSON 'roles'
+                ->setRoles([$roleRef])
+                // Lie l'entité Role via la référence définie dans RoleFixtures
+                ->setRole($this->getReference($roleRef));
 
-        $manager->persist($user);
+            $manager->persist($user);
+        }
+
         $manager->flush();
-
-        $this->addReference('user_alice', $user);
     }
 
     public function getDependencies(): array
     {
+        // Assure que RoleFixtures se charge avant UserFixtures
         return [
             RoleFixtures::class,
-            ServiceFixtures::class,
         ];
     }
 }

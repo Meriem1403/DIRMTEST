@@ -75,7 +75,7 @@ abstract class AbstractFixture implements SharedFixtureInterface
      *
      * @template T of object
      */
-    public function getReference(string $name, string $class): object
+    public function getReference(string $class): object
     {
         return $this->getReferenceRepository()->getReference($name, $class);
     }

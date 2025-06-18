@@ -19,7 +19,6 @@
         "regenerator-runtime": "^0.14.1",
         "tailwindcss": "^4.1.10",
         "webpack": "^5.99.9",
-        "webpack-cli": "^6.0.1",
-        "service-types": "file:assets/controllers"
+        "webpack-cli": "^6.0.1"
     }
 }

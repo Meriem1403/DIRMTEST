@@ -1,13 +1,830 @@
-@import "tailwindcss";
+:root {
+    /* Arrière-plan */
+    --body-bg: #F5F6FA;
+    --sidebar-bg: #FFFFFF;
 
-:root { --sidebar-bg: #deebff; }
+    /* Boutons généraux */
+    --button-primary-bg: #0D99FF;
+    --button-primary-color: #FFFFFF;
+    --border-radius: 4px;
 
+    /* Bouton Confirmed */
+    --button-confirmed-bg: #00B69B;
+    --button-confirmed-color: #FFFFFF;
+
+    /* Bouton Pending */
+    --button-pending-bg: #FCBE2D;
+    --button-pending-color: #FFFFFF;
+
+    /* Bouton Cancelled */
+    --button-cancelled-bg: #FD5454;
+    --button-cancelled-color: #FFFFFF;
+
+    /* Bouton Expired */
+    --button-expired-bg: #979797;
+    --button-expired-color: #FFFFFF;
+}
+
+/* MARGE INFÉRIEURE DU CONTENU PRINCIPAL */
 .main-content {
     margin-bottom: 100px;
 }
 
-.markdown-preview {
-    margin-top: 10px;
-    border: 2px dashed #da3735;
-    padding: 5px;
+/* START CSS REVIEW */
+.text-soft-danger {
+    color: rgba(220, 53, 69, 0.8);
+}
+
+.text-soft-warning {
+    color: rgba(255, 193, 7, 0.8);
+}
+
+.text-soft-success {
+    color: rgba(40, 167, 69, 0.8);
+}
+/* END CSS REVIEW */
+
+
+/* START CSS SEAT MAP */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.legend-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.legend-standard { background-color: #D1F7EA; }
+.legend-pmr { background-color: #0E8CC0; }
+.legend-reserved { background-color: #D5D5D5; }
+.legend-broken { background-color: #FFE3E7; }
+
+.back-to-room {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.back-to-room:hover {
+    background-color: #e0e0e0;
+}
+
+.seat-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.seat-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.seat {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.55rem;
+    font-family: 'ABeeZee', sans-serif;
+    font-style: normal;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-weight: bold;
+    font-size: 0.980rem;
+    cursor: default;
+    line-height: 1.1;
+    padding: 5px 2px;
+}
+
+.seat a {
+    color: #0D99FF;
+    font-size: 10px;
+}
+
+.seat a:hover {
+    color: #0E8CC0;
+}
+
+.seat--standard { background: #D1F7EA; color: #15AA7A; }
+.seat--pmr { background: #80D9FF; color: #0E8CC0; }
+.seat--reserved { background: #D5D5D5; color: #FFFFFF; }
+.seat--broken { background: #FFE3E7; color: #F94D63; text-decoration: line-through; }
+/* END CSS SEAT MAP */
+
+
+/* SIDEBAR */
+.sidebar {
+    background-color: var(--sidebar-bg);
+}
+.custom-grid {
+    margin-top: 2rem;
+}
+
+
+/* BOUTONS EASYADMIN */
+.ea-button-edit,
+.ea-button-detail,
+.ea-button-delete {
+    display: inline-flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.ea-button-edit {
+    color: #99B2C6;
+    border-color: #C5C5C566;
+}
+.ea-button-detail {
+    color: #12AFF0;
+    border-color: #C5C5C566;
+}
+.ea-button-delete {
+    color: #F94D63;
+    border-color: #C5C5C566;
+}
+.ea-button-edit:hover {
+    background-color: rgba(153, 178, 198, 0.1);
+}
+.ea-button-detail:hover {
+    background-color: rgba(18, 175, 240, 0.1);
+}
+.ea-button-delete:hover {
+    background-color: rgba(249, 77, 99, 0.1);
+}
+
+/* BOUTONS STATUTS */
+.btn-confirmed {
+    background-color: var(--button-confirmed-bg);
+    color: var(--button-confirmed-color);
+    border-radius: var(--border-radius);
+}
+
+.btn-pending {
+    background-color: var(--button-pending-bg);
+    color: var(--button-pending-color);
+    border-radius: var(--border-radius);
+}
+
+.btn-cancelled {
+    background-color: var(--button-cancelled-bg);
+    color: var(--button-cancelled-color);
+    border-radius: var(--border-radius);
+}
+
+.btn-expired {
+    background-color: var(--button-expired-bg);
+    color: var(--button-expired-color);
+    border-radius: var(--border-radius);
+}
+
+.btn-active {
+    background-color: #DFFCEF;
+    color: #1AD598;
+    border: 1px solid rgba(26, 213, 152, 0.4);
+    border-radius: 12px;
+    padding: 4px 12px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-active .icon {
+    color: #1AD598;
+}
+
+
+/* PANNEAU TITRES */
+.section-panel,
+.panel-section {
+    padding-left: 1rem;
+    border-left: 4px solid var(--color-primary);
+    font-weight: 600;
+    margin-top: 3rem;
+    color: var(--color-primary);
+}
+.section-panel {
+    font-size: var(--font-size-xl);
+}
+.panel-section {
+    font-size: var(--font-size-lg);
+}
+
+
+/* BADGES */
+.badge-status .badge {
+    background-color: var(--badge-success-bg);
+    color: var(--badge-success-color);
+}
+
+
+/* CHAMPS */
+.field-name input {
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(92, 112, 214, 0.2);
+}
+
+.field-avatar .image-avatar {
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    max-width: 100px;
+}
+
+.field-boolean .badge-boolean-true {
+    background-color: rgba(26, 213, 152, 0.1);
+    border: 1px solid rgba(26, 213, 152, 0.4);
+    color: #1AD598;
+}
+.field-boolean .badge-boolean-false {
+    background: rgba(249,77,99, 0.1);
+    border: 1px solid rgba(249,77,99);
+    color: #F94D63;
+}
+
+.field-text input.form-control {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--form-input-border-color);
+    padding: 6px 12px;
+    box-shadow: var(--form-input-shadow);
+}
+
+/* END CSS FIELD */
+
+/* START CSS CHART */
+
+
+/* Conteneur de la carte graphiques*/
+.container-fluid.px-3.px-md-4 {
+}
+
+/* Stat card */
+.stats-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Titre de la carte */
+.stats-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #0D99FF;
+    padding-bottom: 0.25rem;
+    display: inline-block;
+}
+
+/* Chart wrapper  */
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 350px; /* ajustez selon votre besoin */
+    padding: 0;
+    margin: 0;
+}
+
+/* Le canvas */
+.chart-wrapper canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Styles de liste */
+.stats-list { list-style: none; margin:0; padding:0; flex-grow:1; }
+.stats-list__item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.stats-list__item:last-child { border-bottom: none; }
+.stats-list__link { color:#0D99FF; font-weight:500; text-decoration:none; transition:color .2s; }
+.stats-list__link:hover { color:#0A7ACC; }
+.stats-list__date { color:#555; font-size:.875rem; white-space:nowrap; }
+.stats-list__empty { color:#888; text-align:center; padding:2rem 0; font-style:italic; }
+
+/* END CSS CHART */
+
+/* === START PAGE MOVIES PUBLIC === */
+
+.movie-list-fullwidth {
+    width: 100%;
+    background-color: var(--body-bg);
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+}
+
+.movie-list-inner {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.movie-list-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #111;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.genre-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.genre-filter {
+    background-color: #eee;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    transition: background 0.2s;
+}
+
+.genre-filter:hover {
+    background-color: #ddd;
+}
+
+.genre-filter.active {
+    background-color: #0D99FF;
+    color: #fff;
+    border-color: #0D99FF;
+    font-weight: bold;
+}
+
+.selected-genre-label {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.movie-swiper {
+    width: 100%;
+}
+
+.movie-card-link {
+    display: block;
+    text-align: center;
+    transition: transform 0.3s ease;
+    padding: 1rem 0;
+}
+
+.movie-card-link:hover {
+    transform: scale(1.05);
+}
+
+.movie-poster {
+    width: 220px;
+    height: 330px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: auto;
+}
+
+.movie-title {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #111;
+}
+
+.movie-card-link:hover .movie-title {
+    font-weight: 600;
+}
+
+.no-movies-message {
+    text-align: center;
+    color: #888;
+    margin-top: 3rem;
+    font-style: italic;
+}
+
+
+/* === END PAGE MOVIES PUBLIC === */
+
+
+/* === START CINEMA PUBLIC PAGE === */
+
+.cinema-page {
+    background-color: var(--body-bg);
+    padding: 8rem 2rem 2rem;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.cinema-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #111;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cinema-list {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.cinema-card:hover {
+    transform: scale(1.025);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.cinema-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2A63BF;
+    margin-bottom: 0.5rem;
+    border-radius: 0.375rem; /* soit ~6px */
+}
+
+.cinema-info {
+    font-size: 0.95rem;
+    color: #444;
+    margin: 0.2rem 0;
+    font-family: 'ABeeZee', sans-serif;
+    line-height: 1.3;
+}
+.cinema-info strong {
+    color: #777;
+    font-weight: 500;
+}
+
+.cinema-empty {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+    margin-top: 3rem;
+}
+/* === CINEMA SWIPER === */
+
+
+.cinema-swiper {
+    padding: 3rem 0;
+    width: 100%;
+}
+
+.cinema-swiper .swiper-wrapper {
+    align-items: stretch;
+}
+
+.cinema-swiper .swiper-slide {
+    width: 360px;
+    height: 360px; /* carré */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cinema-card {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    padding: 1.8rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+.cinema-link {
+    margin-top: 1rem;
+    display: inline-block;
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-color);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.cinema-link:hover {
+    background-color: #0A7ACC;
+}
+
+/* === END CINEMA PUBLIC PAGE === */
+
+/* === START SHOWTIME PUBLIC PAGE === */
+
+.cinema-show-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.cinema-show-card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    font-family: 'ABeeZee', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* === END SHOWTIME PUBLIC PAGE === */
+
+/* === START BOOKING PUBLIC PAGE === */
+
+.booking-title {
+    font-family: 'ABeeZee', sans-serif;
+    font-weight: bold;
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.booking-poster {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.seat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;         /* ajustez à la taille souhaitée */
+    aspect-ratio: 1 / 1; /* garde la hauteur égale à la largeur */
+    border-radius: 0.55rem;
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: 'ABeeZee', sans-serif;
+    cursor: pointer;
+    position: relative;
+}
+
+/* On masque la checkbox */
+
+.seat-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Au clic, on grise tout le .seat-body */
+
+.seat-container input[type="checkbox"]:checked + .seat-body {
+    background-color: #D5D5D5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 0.55rem;
+}
+
+.seat-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    /* On peut garder la couleur selon seat--standard, pmr, etc. si on veut
+       ou on applique la classe seat--xxx à la seat-container, up to you.
+    */
+}
+
+
+/* === END BOOKING PUBLIC PAGE === */
+
+/* dans tailwind.css */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Container “ticket” pour HTML */
+.ticket-card {
+    width: 100%;
+    max-width: 16rem; /* = 256px environ, équivalent à w-64 */
+    margin: 0 auto 1.5rem; /* centré et espacement vertical */
+    border: 1px solid #ddd;
+    border-radius: 0.75rem; /* rounded-xl */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Perforation line & holes */
+.ticket-perforation {
+    position: relative;
+}
+.ticket-perforation .line {
+    border-top: 2px dashed #ccc;
+    margin: 0.75rem 0;
+}
+.ticket-perforation .hole {
+    position: absolute;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+    background: #f3f4f6;
+    border-radius: 50%;
+}
+.ticket-perforation .hole.left  { left: -0.5rem; }
+.ticket-perforation .hole.right { right: -0.5rem; }
+
+/* Banner overlay */
+.ticket-card .banner {
+    position: relative;
+    height: 6rem; /* h-24 */
+    background-size: cover;
+    background-position: center;
+}
+.ticket-card .banner .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem;
+}
+
+/* Grid info */
+.ticket-card .info {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: #4a5568; /* text-gray-700 */
+}
+
+/* Stub & QR */
+.ticket-card .qr-container,
+.ticket-card .logo-container {
+    text-align: center;
+    padding: 1rem;
+}
+.ticket-card .qr-container img {
+    width: 10rem; /* 160px */
+    height: 10rem;
+}
+.ticket-card .logo-container img {
+    height: 2rem; /* h-8 */
+    margin-top: 0.75rem;
+}
+
+/* Flex wrapper */
+.ticket-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem; /* gap-6 */
+}
+/* Settings form wrapper */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* espace vertical entre les champs */
+}
+
+/* Label des champs */
+.settings-form label {
+    display: block;
+    font-size: 0.875rem; /* ~text-sm */
+    font-weight: 500;
+    color: #374151; /* text-gray-700 */
+    margin-bottom: 0.25rem;
+}
+.settings-page {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.settings-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.settings-form input,
+.settings-form select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.save-button {
+    padding: 0.75rem 2rem;
+    background-color: #2563eb;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Swiper fix global */
+.swiper {
+    width: 100%;
+    height: auto;
+}
+.swiper-wrapper {
+    display: flex;
+}
+.swiper-slide {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+
+.movie-card-link {
+    display: block;
+    text-align: center;
+}
+
+.movie-poster {
+    width: 160px;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-title {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: black;
+}
+.icon svg,
+.user-avatar svg,
+.dropdown-toggle svg,
+.menu svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
 }

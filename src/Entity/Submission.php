@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
 use App\Repository\SubmissionRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;

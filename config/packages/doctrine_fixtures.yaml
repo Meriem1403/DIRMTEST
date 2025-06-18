@@ -1,0 +1,6 @@
+# config/packages/doctrine_fixtures.yaml
+doctrine_fixtures:
+    orm:
+        default:
+            # change la purge pour supprimer ligne par ligne (DELETE) au lieu de TRUNCATE
+            purge_mode: delete

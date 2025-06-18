@@ -1,2 +1,3 @@
+import './bootstrap.js';
 import './styles/admin.css';
-import './bootstrap';
+import '@symfony/stimulus-bridge'

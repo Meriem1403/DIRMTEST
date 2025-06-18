@@ -1,144 +1,132 @@
 @import "tailwindcss/preflight";
-@import "tailwindcss";
-
+@import "tailwindcss/utilities";
+@import "tailwindcss/theme.css";
+@import "tailwindcss/index.css";
 
 body {
-    font-family: 'system-ui', sans-serif;
+    background-color: white;
+}
+
+.fade-hero {
+    @apply opacity-0 scale-95 transition-all duration-1000 ease-in-out;
+}
+
+.fade-hero.visible {
+    @apply opacity-100 scale-100;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    @apply w-10 h-10 bg-gray-500/50 text-white flex items-center justify-center transition hover:bg-gray-500/80 rounded;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+/* assets/styles/app.css */
+
+/* Reset Password Email Template Styles */
+.reset-email-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reset-email-header {
+    background-color: #1f2937;
+    padding: 20px;
+    text-align: center;
+}
+
+.reset-email-header img {
+    max-height: 40px;
+}
+
+.reset-email-content {
+    padding: 30px 20px;
     color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.reset-email-content h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #111827;
+}
+
+.reset-email-content p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.reset-email-button {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #fff !important;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.reset-email-footer {
+    background-color: #f3f4f6;
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Auth container */
+.auth-container {
+    @apply bg-gradient-to-b from-black/20 to-white/20 p-6 sm:p-10 rounded-lg shadow-lg w-full max-w-xl backdrop-blur-sm;
+}
+
+/* Logo */
+.logo-image {
+    @apply h-28 pb-7;
+}
+
+/* Title */
+.auth-title {
+    @apply text-center text-2xl font-semibold mb-6;
+}
+
+/* Text paragraphs */
+.auth-text {
+    @apply text-base;
+}
+
+/* Primary link */
+.link-primary {
+    @apply text-blue-400 underline hover:text-blue-500;
+}
+
+/* Primary button */
+.btn-primary {
+    @apply inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition;
 }
 
 
-
-body {
-    font-family: 'Spartan', sans-serif;
-    color: #444;
+.flash-error {
+    @apply bg-red-600 text-white p-2 rounded mb-4;
 }
 
-.jumbotron-img {
-    background: rgb(237,116,88);
-    background: linear-gradient(302deg, rgba(237,116,88,1) 16%, rgba(51,61,81,1) 97%);
-    color: #fff;
+.input-field {
+    @apply w-full bg-white text-black rounded px-3 py-2 outline-none;
+}
+.btn-primary:hover {
+    background-color: #1e40af;
 }
 
-.q-container {
-    border-top-right-radius: .25rem;
-    border-top-left-radius: .25rem;
-    background-color: #efefee;
-}
 
-.q-container-show {
-    border-top-right-radius: .25rem;
-    border-top-left-radius: .25rem;
-    background-color: #ED7458;
-}
-
-.q-container img,
-.q-container-show img {
-    border: 2px solid #fff;
-    border-radius: 9999px; /* fully rounded */
-}
-
-.q-display {
-    background: #fff;
-    border-radius: .25rem;
-}
-
-.q-title-show {
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    color: #fff;
-}
-
-.q-title {
-    text-transform: uppercase;
-    color: #444;
-}
-
-.q-title:hover {
-    color: #2B2B2B;
-}
-
-.q-title h2 {
-    font-size: 1.3rem;
-}
-
-.q-display-response {
-    background: #333D51;
-    color: #fff;
-}
-
-.answer-link:hover .magic-wand {
-    transform: rotate(20deg);
-}
-
-.vote-arrows,
-.vote-arrows .btn {
-    font-size: 1.5rem;
-}
-
-.vote-arrows .btn {
-    color: #444;
-    padding: 0;
-}
-
-.vote-arrows span {
-    font-size: 1rem;
-}
-
-.vote-up:hover {
-    color: #3D9970;
-}
-.vote-down:hover {
-    color: #FF4136;
-}
-
-.vote-arrows-alt .vote-up:hover {
-    color: #3D9970;
-}
-.vote-arrows-alt .vote-down:hover {
-    color: rgba(179, 20, 12, 0.63);
-}
-
-.btn-question {
-    color: #FFFFFF;
-    background-color: #ED7458;
-    border-color: #D45B3F;
-}
-
-.btn-question:hover,
-.btn-question:focus,
-.btn-question:active,
-.btn-question.active,
-.open .dropdown-toggle.btn-question {
-    color: #FFFFFF;
-    background-color: #D45B3F;
-    border-color: #D45B3F;
-}
-
-.btn-question.disabled,
-.btn-question[disabled],
-fieldset[disabled] .btn-question,
-.btn-question.disabled:hover,
-.btn-question[disabled]:hover,
-fieldset[disabled] .btn-question:hover,
-.btn-question.disabled:focus,
-.btn-question[disabled]:focus,
-fieldset[disabled] .btn-question:focus,
-.btn-question.disabled:active,
-.btn-question[disabled]:active,
-fieldset[disabled] .btn-question:active,
-.btn-question.disabled.active,
-.btn-question[disabled].active,
-fieldset[disabled] .btn-question.active {
-    background-color: #ED7458;
-    border-color: #D45B3F;
-}
-
-.btn-question .badge {
-    color: #ED7458;
-    background-color: #FFFFFF;
-}
-
-footer {
-    background-color: #efefee;
-}

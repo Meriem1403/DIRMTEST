@@ -1,10 +1,17 @@
 module.exports = {
     content: [
         './templates/**/*.html.twig',
-        './assets/**/*.js'
+        './assets/**/*.js',
     ],
     theme: {
-        extend: {},
+        extend: {
+            backdropBlur: {
+                sm: '3px',
+            },
+            minHeight: {
+                '80vh': '80vh',
+            },
+        },
     },
     plugins: [],
 }

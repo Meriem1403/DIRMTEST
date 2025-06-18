@@ -18,13 +18,6 @@ use DateTimeImmutable;
 #[ApiResource]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public function __construct()
-    {
-        $this->roles = [];
-        $this->submissionsAsAgent = new ArrayCollection();
-        $this->submissionsAsFilledBy = new ArrayCollection();
-    }
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -62,12 +55,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $country = null;
 
-
     #[ORM\Column(length: 20, nullable: true)]
-    private ?string $status = null;
+    private ?string $status = 'Actif';
 
     #[ORM\Column(length: 10, nullable: true)]
-    private ?string $category = null;
+    private ?string $category = 'A';
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?DateTimeImmutable $createdAt = null;
@@ -79,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private bool $isVerified = false;
 
     #[ORM\Column(type: 'json')]
-    private array $roles;
+    private array $roles = [];
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
@@ -104,6 +96,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $serviceLocation = null;
 
+    public function __construct()
+    {
+        $this->submissionsAsAgent = new ArrayCollection();
+        $this->submissionsAsFilledBy = new ArrayCollection();
+    }
+
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
@@ -113,178 +111,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getId(): ?int { return $this->id; }
-
     public function getFirstName(): ?string { return $this->firstName; }
-
-    public function setFirstName(string $firstName): static
-    {
-        $this->firstName = $firstName;
-        return $this;
-    }
-
+    public function setFirstName(string $firstName): static { $this->firstName = $firstName; return $this; }
     public function getLastName(): ?string { return $this->lastName; }
-
-    public function setLastName(string $lastName): static
-    {
-        $this->lastName = $lastName;
-        return $this;
-    }
-
-    public function getFullName(): string
-    {
-        return trim($this->firstName . ' ' . $this->lastName);
-    }
-
-    public function __toString(): string
-    {
-        return $this->getFullName();
-    }
-
+    public function setLastName(string $lastName): static { $this->lastName = $lastName; return $this; }
+    public function getFullName(): string { return trim($this->firstName . ' ' . $this->lastName); }
+    public function __toString(): string { return $this->getFullName(); }
     public function getEmail(): ?string { return $this->email; }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-        return $this;
-    }
-
+    public function setEmail(string $email): static { $this->email = $email; return $this; }
     public function getPassword(): string { return $this->password; }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-        return $this;
-    }
-
+    public function setPassword(string $password): static { $this->password = $password; return $this; }
     public function getPhoneNumber(): ?string { return $this->phoneNumber; }
-
-    public function setPhoneNumber(?string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-        return $this;
-    }
-
+    public function setPhoneNumber(?string $phoneNumber): static { $this->phoneNumber = $phoneNumber; return $this; }
     public function getAddress(): ?string { return $this->address; }
-
-    public function setAddress(?string $address): static
-    {
-        $this->address = $address;
-        return $this;
-    }
-
+    public function setAddress(?string $address): static { $this->address = $address; return $this; }
     public function getCity(): ?string { return $this->city; }
-
-    public function setCity(?string $city): static
-    {
-        $this->city = $city;
-        return $this;
-    }
-
+    public function setCity(?string $city): static { $this->city = $city; return $this; }
     public function getZipCode(): ?string { return $this->zipCode; }
-
-    public function setZipCode(?string $zipCode): static
-    {
-        $this->zipCode = $zipCode;
-        return $this;
-    }
-
+    public function setZipCode(?string $zipCode): static { $this->zipCode = $zipCode; return $this; }
     public function getCountry(): ?string { return $this->country; }
-
-    public function setCountry(?string $country): static
-    {
-        $this->country = $country;
-        return $this;
-    }
-
+    public function setCountry(?string $country): static { $this->country = $country; return $this; }
     public function getStatus(): ?string { return $this->status; }
-
-    public function setStatus(?string $status): static
-    {
-        $this->status = $status;
-        return $this;
-    }
-
+    public function setStatus(?string $status): static { $this->status = $status; return $this; }
     public function getCategory(): ?string { return $this->category; }
-
-    public function setCategory(?string $category): static
-    {
-        $this->category = $category;
-        return $this;
-    }
-
+    public function setCategory(?string $category): static { $this->category = $category; return $this; }
     public function getCreatedAt(): ?DateTimeImmutable { return $this->createdAt; }
-
-    public function setCreatedAt(DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
+    public function setCreatedAt(DateTimeImmutable $createdAt): static { $this->createdAt = $createdAt; return $this; }
     public function isActive(): bool { return $this->isActive; }
-
-    public function setIsActive(bool $isActive): static
-    {
-        $this->isActive = $isActive;
-        return $this;
-    }
-
+    public function setIsActive(bool $isActive): static { $this->isActive = $isActive; return $this; }
     public function isVerified(): bool { return $this->isVerified; }
-
-    public function setIsVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
-        return $this;
-    }
-
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
-    }
-
-    public function setRoles(?array $roles): static
-    {
-        $this->roles = $roles ?? [];
-        return $this;
-    }
-
+    public function setIsVerified(bool $isVerified): static { $this->isVerified = $isVerified; return $this; }
+    public function getRoles(): array { $roles = $this->roles; $roles[] = 'ROLE_USER'; return array_unique($roles); }
+    public function setRoles(?array $roles): static { $this->roles = $roles ?? []; return $this; }
     public function eraseCredentials(): void {}
-
-    public function getUserIdentifier(): string
-    {
-        return $this->email;
-    }
-
+    public function getUserIdentifier(): string { return $this->email; }
     public function getRole(): ?Role { return $this->role; }
-
-    public function setRole(?Role $role): static
-    {
-        $this->role = $role;
-        return $this;
-    }
-
+    public function setRole(?Role $role): static { $this->role = $role; return $this; }
     public function getService(): ?Service { return $this->service; }
-
-    public function setService(?Service $service): static
-    {
-        $this->service = $service;
-        return $this;
-    }
-
+    public function setService(?Service $service): static { $this->service = $service; return $this; }
     public function getSubmissionsAsAgent(): Collection { return $this->submissionsAsAgent; }
-
-    public function addSubmissionAsAgent(Submission $submission): static
-    {
+    public function addSubmissionAsAgent(Submission $submission): static {
         if (!$this->submissionsAsAgent->contains($submission)) {
             $this->submissionsAsAgent[] = $submission;
             $submission->setAgent($this);
         }
         return $this;
     }
-
-    public function removeSubmissionAsAgent(Submission $submission): static
-    {
+    public function removeSubmissionAsAgent(Submission $submission): static {
         if ($this->submissionsAsAgent->removeElement($submission)) {
             if ($submission->getAgent() === $this) {
                 $submission->setAgent(null);
@@ -292,20 +165,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-
     public function getSubmissionsAsFilledBy(): Collection { return $this->submissionsAsFilledBy; }
-
-    public function addSubmissionAsFilledBy(Submission $submission): static
-    {
+    public function addSubmissionAsFilledBy(Submission $submission): static {
         if (!$this->submissionsAsFilledBy->contains($submission)) {
             $this->submissionsAsFilledBy[] = $submission;
             $submission->setFilledBy($this);
         }
         return $this;
     }
-
-    public function removeSubmissionAsFilledBy(Submission $submission): static
-    {
+    public function removeSubmissionAsFilledBy(Submission $submission): static {
         if ($this->submissionsAsFilledBy->removeElement($submission)) {
             if ($submission->getFilledBy() === $this) {
                 $submission->setFilledBy(null);
@@ -313,40 +181,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-
-    public function getJobTitle(): ?string
-    {
-        return $this->jobTitle;
-    }
-
-    public function setJobTitle(?string $jobTitle): static
-    {
-        $this->jobTitle = $jobTitle;
-
-        return $this;
-    }
-
-    public function getServiceType(): ?string
-    {
-        return $this->serviceType;
-    }
-
-    public function setServiceType(?string $serviceType): static
-    {
-        $this->serviceType = $serviceType;
-
-        return $this;
-    }
-
-    public function getServiceLocation(): ?string
-    {
-        return $this->serviceLocation;
-    }
-
-    public function setServiceLocation(?string $serviceLocation): static
-    {
-        $this->serviceLocation = $serviceLocation;
-
-        return $this;
-    }
+    public function getJobTitle(): ?string { return $this->jobTitle; }
+    public function setJobTitle(?string $jobTitle): static { $this->jobTitle = $jobTitle; return $this; }
+    public function getServiceType(): ?string { return $this->serviceType; }
+    public function setServiceType(?string $serviceType): static { $this->serviceType = $serviceType; return $this; }
+    public function getServiceLocation(): ?string { return $this->serviceLocation; }
+    public function setServiceLocation(?string $serviceLocation): static { $this->serviceLocation = $serviceLocation; return $this; }
 }
