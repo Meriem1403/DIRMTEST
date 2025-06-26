@@ -46,29 +46,30 @@ class UserCrudController extends AbstractCrudController
 
             AssociationField::new('role')->setRequired(true),
 
+            // SERVICE: déclenche render() au changement de sélection
             AssociationField::new('service')
                 ->setFormTypeOption('choice_label', 'name')
                 ->setFormTypeOption('attr', [
                     'data-service-types-target' => 'serviceSelect',
-                    'data-action' => 'change->service-types#render'
+                    'data-action'               => 'change->service-types#render',
                 ]),
 
             ChoiceField::new('serviceType')
-                ->setChoices([]) // rempli dynamiquement
+                ->setChoices([])
                 ->allowMultipleChoices(true)
                 ->renderExpanded(true)
                 ->setFormTypeOption('attr', [
                     'data-service-types-target' => 'typeSelect',
-                    'data-action' => 'change->service-types#loadTypeData'
+                    // plus d'appel automatique ici !
                 ]),
 
             ChoiceField::new('serviceLocation')
-                ->setChoices([]) // rempli dynamiquement
+                ->setChoices([])
                 ->allowMultipleChoices(true)
                 ->renderExpanded(true)
                 ->setFormTypeOption('attr', [
                     'data-service-types-target' => 'locationSelect',
-                    'data-action' => 'change->service-types#loadLocationData'
+                    // idem, on retire l'action
                 ]),
 
             ChoiceField::new('status')

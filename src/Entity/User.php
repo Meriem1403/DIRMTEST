@@ -90,11 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $jobTitle = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $serviceType = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $serviceType = [];
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $serviceLocation = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $serviceLocation = [];
 
     public function __construct()
     {
@@ -183,8 +183,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function getJobTitle(): ?string { return $this->jobTitle; }
     public function setJobTitle(?string $jobTitle): static { $this->jobTitle = $jobTitle; return $this; }
-    public function getServiceType(): ?string { return $this->serviceType; }
-    public function setServiceType(?string $serviceType): static { $this->serviceType = $serviceType; return $this; }
-    public function getServiceLocation(): ?string { return $this->serviceLocation; }
-    public function setServiceLocation(?string $serviceLocation): static { $this->serviceLocation = $serviceLocation; return $this; }
+
+    public function getServiceType(): ?array
+    {
+        return $this->serviceType;
+    }
+
+    public function setServiceType(?array $serviceType): static
+    {
+        $this->serviceType = $serviceType ?? [];
+        return $this;
+    }
+
+    public function getServiceLocation(): ?array
+    {
+        return $this->serviceLocation;
+    }
+
+    public function setServiceLocation(?array $serviceLocation): static
+    {
+        $this->serviceLocation = $serviceLocation ?? [];
+        return $this;
+    }
 }
